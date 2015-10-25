@@ -48,13 +48,13 @@ public class PostController {
         logger.info("> get Post");
 
         Optional<Post> post = service.findOne(id);
-        if (post.isPresent()) {
+        if (!post.isPresent()) {
             logger.info("< get Post");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         logger.info("< get Post");
 
-        return new ResponseEntity<>(post, HttpStatus.OK);
+        return new ResponseEntity<>(post.get(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
