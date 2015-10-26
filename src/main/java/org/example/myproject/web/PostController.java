@@ -1,7 +1,7 @@
-package org.example.myproject.web;
+package com.sf.sfwxshu.web.controller;
 
-import org.example.myproject.domain.Post;
-import org.example.myproject.service.PostService;
+import com.sf.sfwxshu.model.Post;
+import com.sf.sfwxshu.web.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,10 @@ public class PostController {
     public ResponseEntity get(Pageable pageable) {
         logger.info("> get posts");
 
-        PageRequest orderByCreateTime = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(),
-                new Sort(Sort.Direction.DESC, "createTime"));
+        PageRequest orderByUpdateTime = new PageRequest(pageable.getPageNumber(), pageable.getPageSize(),
+                new Sort(Sort.Direction.DESC, "updateTime"));
 
-        Page<Post> posts = service.findAll(orderByCreateTime);
+        Page<Post> posts = service.findAll(orderByUpdateTime);
 
         logger.info("< get posts");
         return new ResponseEntity<>(posts, HttpStatus.OK);
@@ -70,7 +70,7 @@ public class PostController {
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity update(Post Post) {
         logger.info("> put Post");
 
@@ -99,6 +99,17 @@ public class PostController {
         logger.info("< shake Post");
 
         return new ResponseEntity<>(shake.orElseGet(null), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/infoshake")
+    public ResponseEntity infoShake(String infoid) {
+        logger.info("> info shake Post");
+
+        service.infoShake(infoid);
+
+        logger.info("< info shake Post");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
