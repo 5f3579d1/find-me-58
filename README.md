@@ -1,5 +1,7 @@
 # find me 58
 
+  这是我们参加 segmentfault hackathon 比赛的项目源码，主要功能是实现现场需求的发布。
+
 ## Install
 
     brew install gradle
